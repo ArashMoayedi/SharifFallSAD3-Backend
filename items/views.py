@@ -1,7 +1,6 @@
-from rest_framework import viewsets, permissions
-
-from .models import Item
-from .serializers import ItemSerializer, ItemRateSerializer
+from rest_framework import viewsets, permissions, serializers
+from .models import Item, Rating
+from .serializers import ItemSerializer, ItemRateSerializer, ItemFullSerializer, RatingSerializer
 from rest_framework.response import Response
 from rest_framework import generics
 
@@ -20,16 +19,34 @@ class ItemViewSet(viewsets.ModelViewSet):
         return Response({'status': 'Request submitted'})
 
 
+class AllItems(generics.ListAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemFullSerializer
+
+
 class ItemListView(generics.ListAPIView):
     serializer_class = ItemSerializer
 
     def get_queryset(self):
-        return Item.objects.filter(name=self.kwargs['name'])
+        return Item.objects.filter(code=self.kwargs['code'])
 
 
-class ItemRateView(generics.ListCreateAPIView):
+class ItemRateView(generics.CreateAPIView):
     serializer_class = ItemRateSerializer
+    user = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+    )
 
-    def get_queryset(self):
-        return Item.objects.filter(name=self.kwargs['name'])
+    def perform_create(self, serializer):
+        if Rating.objects.filter(user=self.request.user, item=self.request.data['item']).exists():
+            ex = Rating.objects.get(user=self.request.user, item=self.request.data['item'])
+            ex.score = self.request.data['score']
+            ex.comment = self.request.data['comment']
+            ex.save(update_fields=["score", "comment"])
+        else:
+            serializer.save(user=self.request.user)
 
+
+class AllRatings(generics.ListAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer

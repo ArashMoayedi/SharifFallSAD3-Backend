@@ -18,6 +18,6 @@ def current_user(request):
     return Response(serializer.data)
 
 
-class UserListView(generics.ListCreateAPIView):
+class UserListView(generics.UpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
