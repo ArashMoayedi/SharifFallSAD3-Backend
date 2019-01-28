@@ -5,6 +5,7 @@ class Item(models.Model):
     name = models.CharField(max_length=255)
     code = models.CharField(max_length=255)
     price = models.IntegerField()
+    rating = models.IntegerField()
     price_verified = models.BooleanField(default=False)
     item_verified = models.BooleanField(default=False)
 

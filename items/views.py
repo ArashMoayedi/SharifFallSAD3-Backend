@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions
 
 from .models import Item
-from .serializers import ItemSerializer
+from .serializers import ItemSerializer, ItemRateSerializer
 from rest_framework.response import Response
 from rest_framework import generics
 
@@ -22,6 +22,13 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 class ItemListView(generics.ListAPIView):
     serializer_class = ItemSerializer
+
+    def get_queryset(self):
+        return Item.objects.filter(name=self.kwargs['name'])
+
+
+class ItemRateView(generics.ListCreateAPIView):
+    serializer_class = ItemRateSerializer
 
     def get_queryset(self):
         return Item.objects.filter(name=self.kwargs['name'])

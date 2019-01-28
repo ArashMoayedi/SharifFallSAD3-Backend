@@ -8,5 +8,6 @@ router.register('items', views.ItemViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    re_path(r'^(?P<name>.+)/$', views.ItemListView.as_view()),
+    re_path(r'^search/(?P<name>.+)/$', views.ItemListView.as_view()),
+    re_path(r'^rate/(?P<name>.+)/$', views.ItemRateView.as_view()),
 ]
