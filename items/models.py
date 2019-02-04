@@ -23,7 +23,6 @@ class Item(models.Model):
 
     @property
     def comments(self):
-        print(Rating.objects.filter(item=self).values_list('comment', flat=True))
         return [(rating.full_name, rating.score, rating.comment) for rating in Rating.objects.filter(item=self)]
 
 

@@ -18,6 +18,18 @@ class ItemViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response({'status': 'Request submitted'})
 
+    def get_queryset(self):
+        queryset = Item.objects.all().order_by('-item_promoted')
+        print(queryset)
+        query = self.request.query_params.get('search', None)
+        if query is not None:
+            new_queryset = []
+            for query_item in queryset:
+                if query in query_item.name:
+                    new_queryset.append(query_item)
+            return new_queryset
+        return queryset
+
 
 class AllItems(generics.ListAPIView):
     queryset = Item.objects.all()
