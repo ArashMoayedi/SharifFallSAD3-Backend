@@ -6,7 +6,7 @@ from .models import Item, Rating, PromotionRequest
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ('name', 'code', 'price', 'rating', 'comments', 'description', 'imgsrc', 'item_promoted')
+        fields = ('name', 'code', 'price', 'rating', 'comments', 'description', 'img1', 'img2', 'img3', 'img4', 'img5', 'item_promoted')
 
 
 class ItemFullSerializer (serializers.ModelSerializer):
