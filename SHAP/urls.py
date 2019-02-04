@@ -34,4 +34,5 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('api/v1/', include('apiv1.urls')),
     path('admin/', admin.site.urls),
+    re_path(r'^', include('django.contrib.auth.urls')),
 ]
