@@ -35,13 +35,13 @@ class ItemRateView(generics.CreateAPIView):
     serializer_class = ItemRateSerializer
 
     def perform_create(self, serializer):
-        if Rating.objects.filter(user=self.request.user, item=self.request.data['item']).exists():
-            ex = Rating.objects.get(user=self.request.user, item=self.request.data['item'])
+        if Rating.objects.filter(user=self.request.data['user'], item=self.request.data['item']).exists():
+            ex = Rating.objects.get(user=self.request.data['item'], item=self.request.data['item'])
             ex.score = self.request.data['score']
             ex.comment = self.request.data['comment']
             ex.save(update_fields=["score", "comment"])
         else:
-            serializer.save(user=self.request.user)
+            serializer.save()
 
 
 class PromotionRequestView(generics.CreateAPIView):
