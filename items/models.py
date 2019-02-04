@@ -9,6 +9,8 @@ class Item(models.Model):
     price = models.IntegerField()
     price_verified = models.BooleanField(default=False)
     item_verified = models.BooleanField(default=False)
+    item_promoted = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.name
@@ -26,3 +28,7 @@ class Rating(models.Model):
     item = models.ForeignKey(Item, on_delete='CASCADE')
     score = models.IntegerField(choices=rates)
     comment = models.TextField(max_length=2000, null=True)
+
+
+class PromotionRequest(models.Model):
+    item = models.ForeignKey(Item, on_delete='CASCADE')

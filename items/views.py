@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions, serializers
-from .models import Item, Rating
-from .serializers import ItemSerializer, ItemRateSerializer, ItemFullSerializer, RatingSerializer
+from .models import Item, Rating, PromotionRequest
+from .serializers import ItemSerializer, ItemRateSerializer, ItemFullSerializer, RatingSerializer, PromotionRequestSerializer
 from rest_framework.response import Response
 from rest_framework import generics
 
@@ -33,9 +33,6 @@ class ItemListView(generics.ListAPIView):
 
 class ItemRateView(generics.CreateAPIView):
     serializer_class = ItemRateSerializer
-    user = serializers.PrimaryKeyRelatedField(
-        read_only=True,
-    )
 
     def perform_create(self, serializer):
         if Rating.objects.filter(user=self.request.user, item=self.request.data['item']).exists():
@@ -45,6 +42,15 @@ class ItemRateView(generics.CreateAPIView):
             ex.save(update_fields=["score", "comment"])
         else:
             serializer.save(user=self.request.user)
+
+
+class PromotionRequestView(generics.CreateAPIView):
+    queryset = Item.objects.all()
+    serializer_class = PromotionRequestSerializer
+    permission_classes = [permissions.AllowAny, ]
+
+    def perform_create(self, serializer):
+        serializer.save()
 
 
 class AllRatings(generics.ListAPIView):

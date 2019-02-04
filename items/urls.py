@@ -12,4 +12,5 @@ urlpatterns = [
     path('ratings/', views.AllRatings.as_view()),
     re_path(r'^search/(?P<code>.+)/$', views.ItemListView.as_view()),
     path('rate/', views.ItemRateView.as_view()),
+    path('promote/', views.PromotionRequestView.as_view())
 ]

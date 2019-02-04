@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Item, Rating
+from .models import Item, Rating, PromotionRequest
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -24,4 +24,12 @@ class ItemRateSerializer(serializers.ModelSerializer):
 class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
+        fields = "__all__"
+
+
+class PromotionRequestSerializer(serializers.ModelSerializer):
+    item = serializers.PrimaryKeyRelatedField(queryset=Item.objects.all())
+
+    class Meta:
+        model = PromotionRequest
         fields = "__all__"
