@@ -40,7 +40,7 @@ class ItemListView(generics.ListAPIView):
     serializer_class = ItemSerializer
 
     def get_queryset(self):
-        return Item.objects.filter(code=self.kwargs['code'])
+        return Item.objects.filter(name=self.kwargs['code'])
 
 
 class ItemRateView(generics.CreateAPIView):

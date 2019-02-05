@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
 
-    fullName = models.CharField(max_length=24, null=True)
     owns_store = models.BooleanField('owns_store', default=False)
     owns_company = models.BooleanField('owns_company', default=False)
 
