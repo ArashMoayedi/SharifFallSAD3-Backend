@@ -65,6 +65,7 @@ DEFAULT_FROM_EMAIL = 'SHAP Team <noreply@shap.com>'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "localhost:8080"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
