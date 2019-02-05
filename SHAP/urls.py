@@ -30,9 +30,11 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('api/v1/', include('apiv1.urls')),
     path('admin/', admin.site.urls),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     re_path(r'^', include('django.contrib.auth.urls')),
 ]
