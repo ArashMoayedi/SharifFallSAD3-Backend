@@ -34,8 +34,9 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-
-    fullName = serializers.CharField()
+    first_name = serializers.CharField(max_length=255)
+    last_name = serializers.CharField(max_length=255)
+    image = serializers.ImageField(allow_null=True)
 
     def validate_username(self, username):
         username = get_adapter().clean_username(username)
@@ -64,7 +65,10 @@ class RegisterSerializer(serializers.Serializer):
         return {
             'username': self.validated_data.get('username', ''),
             'password1': self.validated_data.get('password1', ''),
-            'email': self.validated_data.get('email', '')
+            'email': self.validated_data.get('email', ''),
+            'first_name': self.validated_data.get('first_name', ''),
+            'last_name': self.validated_data.get('last_name', ''),
+            'image': self.validated_data.get('image', '')
         }
 
     def save(self, request):

@@ -6,6 +6,7 @@ class User(AbstractUser):
 
     owns_store = models.BooleanField('owns_store', default=False)
     owns_company = models.BooleanField('owns_company', default=False)
+    image = models.ImageField(blank=True)
 
     def __str__(self):
         return self.username
